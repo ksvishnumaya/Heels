@@ -1,0 +1,91 @@
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+var uid=$.cookie("uid");
+
+
+$.getJSON("http://madapp.byethost22.com/lesscredit.php?callback=?",{uid:uid},function(result){
+
+//alert(result);
+
+$.each(result,function(i,item){
+
+	$("#table1").append("<tr><td>"+(i+1)+"</td><td>"+item[0]+"</td><td align='right'>"+item[1]+"</td></tr>");
+})
+
+//window.location.reload();
+
+});
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+});
+
+
+</script>
+<body>
+
+<div data-role="page">
+
+
+    <div data-role="header" data-theme="a" data-position="fixed" data-fullscreen="true">
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="index.html" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+</div>
+
+<div data-role="content">
+ 	<br><br><br>
+ 	
+
+<table id="table1" align="center" width="50%">
+
+<tr bgcolor='grey'>
+
+<th>SNO</th>
+
+<th>NAME</th>
+
+<th>CREDITS</th>
+
+</tr>
+</table>
+
+</div>
+
+	<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+    
+
+ </div><!--footer-->
+   
+</div>
+</body>
+	</html>
+ 

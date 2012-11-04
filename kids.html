@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+
+<style type="text/css">
+.ui-select{
+
+	width: 70%;
+}
+.imgtxt{
+text-align: center;
+font-size: 15px;
+font-family:"lucida calligraphy"; 
+font-weight: bold;
+}
+
+img.kidimg{
+height: 100px;
+width: 120px;
+padding: 20px 10px 0px 10px;
+
+}
+
+div.imgbox{
+height: 160px;
+width: 140px;
+background-color: white;
+position: relative;
+left:20px;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+
+
+$(":text").width("50%");
+
+var uid=$.cookie("uid");
+
+var uname=$.cookie("uname");
+
+$("#kidslist").html("<br>");
+
+
+$.getJSON("http://madapp.byethost22.com/kids_mine.php?callback=?",{uid:uid},function(result)
+{ 
+    //alert(uid);
+
+$.each(result,function(i,item){
+
+    var name=item[0];
+
+    name=name.replace(/ /g,"%");
+
+
+
+$("#kidslist").append("<div data-role='collapsible'><h1>"+item[0]+"</h1><h2>Birthday on "+item[1]+"</h2><a href=editkid.html?c="+item[2]+"&n="+name+" data-ajax='false' data-role='button' style='width:10%'>Edit</a></div>").trigger("create");
+
+//$("#kidslist").append("<h3>Center id :"+item[2]+"</h3>");
+
+});
+
+});
+
+$.getJSON("http://madapp.byethost22.com/centerlist.php?callback=?",{uname:uname},function(result)
+{ 
+$.each(result,function(i,item){
+    //alert(result);
+
+$("#category").append("<option value="+item[1]+">"+item[0]+"</option>");
+
+});
+
+});
+
+$("#category").change(function()
+{
+
+var value=$("#category").val();
+
+$.cookie("centername",value);
+
+
+$("#kidslist").html("<h2>"+value+" KIDS</h2>");
+ 
+if(value=='MyClass')
+{
+
+$.getJSON("http://madapp.byethost22.com/kids_mine.php?callback=?",{uid:uid},function(result)
+{ 
+
+$.each(result,function(i,item){
+
+    var name=item[0];
+
+    name=name.replace(/ /g,"%");
+
+$("#kidslist").append("<div data-role='collapsible'><h1>"+item[0]+"</h1><h3>Birthday on "+item[1]+"</h3><a href=editkid.html?c="+item[2]+"&n="+name+" data-ajax='false' data-role='button' style='width:50%'>Edit</a></div>").trigger("create");
+
+//$("#kidslist").append("<h3>Center id :"+item[2]+"</h3>");
+
+});
+
+});
+
+}
+else
+{
+ 
+
+$.getJSON("http://madapp.byethost22.com/kid_center.php?callback=?",{category:value},function(result)
+{ 
+
+$.each(result,function(i,item){
+
+
+    var name=item[0];
+
+    name=name.replace(/ /g,"%");
+
+$("#kidslist").append("<div data-role='collapsible'><h1>"+item[0]+"</h1><h3>Birthday on "+item[1]+"</h3><a href=editkid.html?c="+value+"&n="+name+" data-ajax='false' data-role='button' style='width:50%'>Edit</a></div>").trigger("create");
+
+//$("#kidslist").append("<h3>Center id :"+item[2]+"</h3>");
+
+
+
+});
+
+});
+
+}
+
+    
+
+});
+
+
+$("#SearchKid").keyup(function(){
+
+var value=$("#SearchKid").val();
+
+var uid=$.cookie("uid");
+
+$("#kidslist").html("<br>");
+
+$.getJSON("http://madapp.byethost22.com/searchkids.php?callback=?",{uname:value,uid:uid},function(result)
+{ 
+
+if(result=='')
+{
+$("#kidslist").html("No search results");
+}
+else
+{
+$.each(result,function(i,item){
+    var name=item[0];
+
+    name=name.replace(/ /g,"%");
+
+$("#kidslist").append("<div data-role='collapsible'><h1>"+item[0]+"</h1><h3>Birthday on <b>"+item[1]+"</b></h3><h3>Of Center <b> "+item[2]+"</b></h3><a href=editkid.html?c="+item[3]+"&n="+name+" data-ajax='false' data-role='button' style='width:50%'>Edit</a></div>").trigger("create");
+
+//$("#kidslist").append("<h3>Center id :"+item[2]+"</h3>");
+
+});
+
+}
+
+});
+
+});
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+
+
+
+
+});
+
+
+</script>
+
+
+</head>
+<body>
+
+	<div data-role="page">
+
+
+    <div data-role="header" data-theme="a" data-position="fixed" data-fullscreen="true">
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="index.html" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+ </div><!--header-->
+    <div data-role="content">
+<br><br>
+
+<div>
+
+<div id="sample"></div>
+<!--fieldset data-role="controlgroup" data-type="horizontal" style="width:100%;">
+     	<div class="ui-radio">
+         <input type="radio" name="view" id="r1" value="on">
+         <label for="r1" class="input">
+         Classic  View
+         </label>
+     </div>
+        <div class="ui-radio">
+         <input type="radio" name="view" id="r2" value="off">
+         <label for="r2" class="input">
+         Customized View
+         
+     </label>
+ </div>
+     </fieldset-->
+
+<div>
+<br>
+
+<div align="right">
+
+<form id="form1" method="get" action="">
+<label for="SearchKid">Search Kid by Name</label>
+<input id="SearchKid" name="SearchKid" type="text">
+
+<label for="list" align="center">Look for the Kids from</label>
+
+<select id="category" name="category" data-theme="a">
+    
+<option value="MyClass">MyClass</option>
+
+</select>
+
+</form>
+</div>
+
+<!--div class="imgbox">
+<img src="images/Koala.jpg" class="kidimg">
+<p class="imgtxt">Daiv</p>
+</div-->
+<br>
+<div data-role="collapsible-set" data-iconpos="right">
+<div id="kidslist">
+
+
+</div>
+</div>
+
+
+
+</div><!--content-->
+
+    <div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+    
+
+ </div><!--footer-->
+   
+
+    </div><!--page-->
+
+
+    <div>
+
+    </div>
+</body>
+</html>

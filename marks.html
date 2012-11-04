@@ -1,0 +1,210 @@
+<html>
+<head>      
+        <title>Classes</title>           
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+<script type= "text/javascript">
+
+$(document).ready(function(){
+
+var a=new Array();
+var uid=$.cookie("uid");
+
+
+$.getJSON("http://madapp.byethost22.com/examlist.php?callback=?",{uid:uid},function(result){
+
+$("#exameventid").html("<option>..</option>");	
+
+$.each(result,function(i,item){
+
+$("#exameventid").append("<option>"+item+"</option>");
+
+});
+
+});
+
+
+$("#exameventid").change(function(){
+
+
+$("#divkids").css("visibility","visible");
+
+
+var exam=$("#exameventid").val();
+
+$("#kids").html("<option>loading..</option>");
+
+
+
+$.getJSON("http://madapp.byethost22.com/kidslist.php?callback=?",{exam:exam},function(result)
+{
+
+$.each(result,function(i,item)
+{
+
+$("#kids").append("<option>"+item+"</option>");
+
+});
+
+
+});
+
+
+});
+
+$("#kids").change(function(){
+
+
+$("#divmarks").css("visibility","visible");
+
+
+
+var exam=$("#exameventid").val();
+
+$("#scores").html("<br>");
+
+$.getJSON("http://madapp.byethost22.com/subjectlist.php?callback=?",{exam:exam},function(result){
+
+
+$.each(result,function(i,item){
+
+$("#scores").append("<tr><td><b>"+item[1]+"</b>("+item[2]+")</td><td><input type='text' size='2' id='mark"+i+"'></td></tr>");
+
+no=i;
+
+a[i]=item[0];
+});
+
+});
+
+//
+
+});
+
+
+$("#submit").click(function(){
+
+var exam=$("#exameventid").val();
+
+
+var kid=$("#kids").val();
+
+for (var i = 0; i < a.length; i++) {
+
+var mark="mark"+i;
+
+mark=$("#"+mark).val();
+
+alert(a[i]);
+
+$.getJSON("http://madapp.byethost22.com/addresults.php?callback=?",{exam:exam,kid:kid,subject:a[i],mark:mark},function(result){
+
+alert("Entry successful");
+
+});
+	
+};
+
+
+});
+
+ $("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+
+});
+
+
+</script>
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+</head>
+
+<body>
+
+	<div data-role="page">
+
+		<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+</div><!--header-->
+<br><br><br>
+
+<div data-role="content"  data-theme="a">
+
+<div align="center">
+	<form name="examresults" id="form1" style="width:100%;">
+      <table>
+   
+       
+<tr id="examevent">
+<td>Exam_Event Id</td>
+
+<td>
+	<select id="exameventid">
+<option>Select id</option>
+<option>no exams</option>
+</select></td>
+</td>
+</tr>
+
+<tr style="visibility:hidden;" id="divkids"> <td>Kids</td>
+	<td>
+<select id="kids">
+<option>Select kid</option>
+</select></td>
+</tr>
+</table>
+
+<span style="visibility:hidden;" id="divmarks">
+
+<table id="scores" >
+	<tr>
+		<th>Section(max)</th>
+		<th>Mark</th>
+	</tr>
+
+</table>
+
+</span>
+<input type="button" id="submit" value="Enter Marks">
+
+	</form>
+
+
+</div>
+</div>
+
+		
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			
+		<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+</div>
+
+	</body>
+
+
+</html>

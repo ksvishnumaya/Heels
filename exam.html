@@ -1,0 +1,129 @@
+<html>
+<head>      
+                  
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+<style type="text/css">
+
+
+</style>
+<title>Exams</title>
+
+<script type= "text/javascript">
+
+$(document).ready(function(){
+
+
+var uname=$.cookie("uname");
+
+var uid=$.cookie("uid");
+
+var a =new Array();
+
+
+$.getJSON("http://madapp.byethost22.com/examlist.php?callback=?",{uid:uid},function(result){
+//alert(result);
+
+
+$.each(result,function(i,item){
+
+
+$.getJSON("http://madapp.byethost22.com/examdetails.php?callback=?",{exam:item},function(data){
+//alert("daivame");
+
+//alert(data[0]+","+data[1]);
+
+$("#list").append("<div data-role='collapsible'><h1>ID: "+item+" "+data[0]+" ,"+data[1]+"</h1><div id="+i+"></div></div>").trigger("create");
+
+$.getJSON("http://madapp.byethost22.com/subjectlist.php?callback=?",{exam:item},function(sub){
+
+	//alert("daivame");
+
+$.each(sub,function(j,ele){
+
+//alert(ele);
+
+$("#"+i).append("<b>"+ele[1]+"</b> at a max mark of <b> "+ ele[2]+"<br>").trigger("create");
+
+});
+
+
+});
+
+});
+
+
+
+});
+
+});
+
+
+
+
+ $("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+
+});
+
+
+</script>
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+</head>
+
+<body>
+
+	<div data-role="page">
+
+		<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+</div><!--header-->
+<br><br><br>
+
+<div align="right">
+<a data-role="button" id="addexam" data-theme="a" href="addexams.html" style="width:70%;" data-ajax="false">Add New Exam</a>
+</div>
+
+<div data-role="content">
+<h2>Exam Events</h2>
+<div data-role="collapsible-set" data-iconpos="right" id="list">
+
+</div>
+</div><div><br><br><br></div>
+
+		
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+</div>
+
+	</body>
+
+
+</html>

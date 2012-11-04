@@ -1,0 +1,272 @@
+<html>
+<head>      
+        <title>Classes</title>           
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+<script type= "text/javascript">
+
+$(document).ready(function(){
+
+var today=new Date();
+
+var year=today.getFullYear();
+
+var month=today.getMonth()+1;
+
+var date=today.getDate();
+
+var uname=$.cookie("uname");
+
+
+
+//alert(month);
+$.getJSON("http://madapp.byethost22.com/centerlist.php?callback=?",{uname:uname},function(result)
+{ 
+$.each(result,function(i,item){
+
+$("#center").append("<option>"+item+"</option>");
+
+});
+
+});
+
+
+$("#center").change(function(){
+
+var center=$("#center").val();
+
+center=center.split(',');
+
+//alert(center[0]);
+
+
+$("#divlevel").css("visibility","visible");
+
+$("#level").html("<option>loading..</option>");
+
+$.getJSON("http://madapp.byethost22.com/levellist.php?callback=?",{center:center[0],uname:uname},function(result)
+{ 
+$.each(result,function(i,item){
+
+$("#level").append("<option>"+item+"</option>");
+
+});
+
+});
+
+});
+
+
+$("#level").change(function(){
+
+//alert(level);
+
+$("#divthemes").css("visibility","visible");
+
+//$("#kids").html("<option>loading..</option>");
+
+});
+
+
+
+$("#themes").change(function(){
+
+	$("#date").css("visibility","visible");
+
+$("#divsubjects").css("visibility","visible");
+
+var center=$("#center").val();
+
+var level=$("#level").val();
+
+
+});
+
+$("#subjects").change(function(){
+
+	var nos=$("#subjects").val();
+
+$("#details").html("<br>");
+
+	for (var i = 0; i < nos; i++) {
+		
+		$("#details").append("<br>Name:<input type='text' id='name"+i+"'><br>Marks:<input type='text' id='mark"+i+"'><br>");
+
+	};
+
+	
+});
+
+
+
+$("#submit").click(function(){
+
+
+	
+/*
+	for (var i = 0; i < nos; i++) {
+		
+	var mark="mark"+i;
+alert($('#'+mark).val());
+}
+*/	
+
+var center=$("#center").val();
+center=center.split(',');
+
+
+var level=$("#level").val();
+
+var theme=$("#themes").val();
+
+var date=$("#examdate").val();
+
+var nos=$("#subjects").val();
+
+
+$.getJSON("http://madapp.byethost22.com/addexams.php?callback=?",{center:center[0],level:level,theme:theme,date:date},function(result){
+
+	alert("Successful Entry! New Exam Event "+result);
+
+
+for (var i = 0; i < nos; i++) {
+
+var mark="mark"+i;
+var name="name"+i;		
+mark=$('#'+mark).val();
+name=$('#'+name).val();
+
+$.getJSON("http://madapp.byethost22.com/addsubjects.php?callback=?",{name:name,exameventid:result,mark:mark});
+
+
+};
+
+
+
+});
+
+
+});
+
+ $("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+
+});
+
+
+</script>
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+</head>
+
+<body>
+
+	<div data-role="page">
+
+		<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+</div><!--header-->
+<br><br><br>
+
+<div data-role="content"  data-theme="a">
+
+<div align="center">
+	<form name="examresults" id="form1" style="width:50%;">
+      <table>
+   
+       <tr><td>Center</td><td>
+<select id="center">
+<option>Select Center</option>
+</select>
+</td></tr>
+
+<tr style="visibility:hidden;" id="divlevel">
+
+   <td>    Level</td>
+   <td>
+<select id="level">
+<option>Select  Level</option>
+</select>
+</tr>
+
+
+
+<tr style="visibility:hidden;" id="divthemes"> <td>Themes</td>
+	<td>
+<select id="themes">
+<option>Select themes</option>
+<option>BAT</option>
+<option>Theme A</option>
+<option>Theme B</option>
+<option>Theme C</option>
+<option>Theme D</option>
+</select></td>
+</tr>
+
+<tr style="visibility:hidden;" id="date" ><td>Date</td>
+<td><input type="text" value="yyyy-mm-dd" id="examdate">
+</td>
+</tr>		
+
+
+<tr style="visibility:hidden;" id="divsubjects"> <td>No of Sections</td>
+	<td>
+	
+<select id="subjects">
+<option>select the no</option>	
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+</select></td>
+<tr>
+	<td></td>
+<td id="details"></td>
+</tr>
+</tr>
+</table>
+
+
+<input type="button" id="submit" value="Submit" disable="true">
+
+	</form>
+
+
+</div>
+</div>
+
+		
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+</div>
+
+	</body>
+
+
+</html>

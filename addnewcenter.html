@@ -1,0 +1,118 @@
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+<h1> 
+	ADD CENTER
+</h1>
+<script type="text/javascript" >
+$(document).ready(function(){ 
+
+     var uid=$.cookie("uid");
+
+	
+   var uname=$.cookie("uname");
+
+	
+	
+	$.getJSON("http://madapp.byethost22.com/volunteers.php?callback=?",{uname:uname},function(result){
+
+
+       $.each(result,function(i,item){
+
+       $("#centerhead").append("<option>"+item[0]+"</option>").trigger("create");
+    
+      
+        });
+ 
+        });
+
+
+$("#submit").click(function(){
+
+	//var cname=$("#centername").val();
+
+	//var chname=$("#centerhead").val();
+
+$("#hidden").attr("value",uid);
+
+
+$.getJSON("http://madapp.byethost22.com/addnewcenter.php?callback=?",$("#addcenter").serialize(),function(result){
+
+if(result!=null)
+
+alert("New Center Formed!");
+
+
+});
+
+window.location.reload();
+});
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+})
+
+});
+</script>
+<body>
+
+	<div data-role="page">
+
+
+    <div data-role="header" data-theme="a" data-position="fixed" data-fullscreen="true">
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+ </div><!--header-->
+ <div data-role="content">
+ 	<br><br><br>
+	<form type="" method="post" id= "addcenter">
+		Center <input type= "text" name= "centername" id= "centername">
+		<br>
+		CenterHead
+		<select id="centerhead" name="centerhead">
+    
+<option id="ch" name="ch">Choose Center Head</option>
+
+</select>
+		<br>
+		<input type="hidden" id="hidden" name="uid">
+		<input type="submit" value= "submit" id="submit">
+	</form>
+</div>
+
+
+    <div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+    
+
+ </div><!--footer-->
+
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+	$("#sum").click(function(){
+
+
+$.getJSON("http://madapp.byethost22.com/calc.php?callback=?",{a:10,b:20},function(result){
+
+alert(result);
+
+//.success(function() { alert("second success"); })
+//.error(function() { alert("error"); })
+//.complete(function() { alert("complete"); });
+
+//$("#c").attr("value",result);
+
+
+//alert("daivame");
+window.location="index.html";
+
+});
+
+});
+
+
+	//window.location.reload();
+});
+
+</script>
+
+
+</head>
+
+
+<body>
+
+<form action="" method="POST">
+
+A:<input type="text" name="a">
+<br>
+B:<input type="text" name="b">
+
+C:=<input type="text" name="c" id="c">
+
+<input type="submit" value="Sum" id="sum">
+
+</form>
+</body>
+
+</html>

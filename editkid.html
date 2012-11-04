@@ -1,0 +1,203 @@
+<html>
+<title>
+Profile
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.min.css" />
+<style type="text/css">
+.ui-select{
+
+	width: 32.222222328186035%;
+}
+</style>
+<script type="text/javascript">
+
+var string=window.location.search;
+
+var k=string.split('&');
+
+var center=k[0];
+var kidname=k[1];
+
+center=center.substr(3);
+
+center=center.replace(/%/g," ");
+
+
+//alert(center);
+var kidname=k[1];
+
+kidname=kidname.substr(2);
+
+kidname=kidname.replace(/%/g," ");
+
+//alert(kidname);
+
+
+//var cname=$.cookie("centername");
+
+
+$(document).ready(function(){
+
+//$(":radio").width("20%");
+	//$(".input").width("20%")
+$(":text").width("20%");
+var uid=$.cookie("uid");
+var uname=$.cookie("uname");
+
+var sid=0;
+
+
+
+
+//alert(cname);
+
+$.getJSON("http://madapp.byethost22.com/kidsprofile.php?callback=?",{kidname:kidname,center:center,uid:uid},function(result){
+
+//alert(result);
+
+//alert("daivame");
+$("#name").attr("value",result[0]);
+
+$("#dob").attr("value",result[1]);
+
+//$("#center").attr("value",result[2])
+
+$("#"+result[2]).attr("selected","selected");
+
+$("#description").attr("value",result[3]);
+
+sid=result[4];
+
+//alert(sid);
+//alert(sid);
+
+
+});
+
+
+
+
+$("#submit").click(function(){
+
+$("#hidden").attr("value",sid);
+
+$("#hidden2").attr("value",uid);
+
+$.getJSON("http://madapp.byethost22.com/editkid.php?callback=?",$("#kidprofile").serialize(),function(result){
+
+alert("entry");
+
+
+});
+
+window.location.reload();
+
+});
+
+
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+});
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+});
+
+
+});
+
+
+
+</script>
+
+<body>
+
+<div data-role="page" data-add-back-btn="true">
+
+<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+</div><!--header-->
+
+
+
+<div data-role="content"  data-theme="a">
+
+<br>
+<br>
+
+
+
+<br>
+
+
+<form name="profile" action="" id="kidprofile">
+
+		
+
+Name
+	
+	<input type="text" name="name" class="input" id="name">
+
+	<input type="hidden" id="hidden" name="sid">
+	
+	<input type="hidden" id="hidden2" name="uid">
+Date of Birth
+	<br>
+	<input type="text" name="dob" id="dob" class="dob">
+ 
+	
+Description
+	<br>
+        <textarea rows="5" cols="24" class="input" id="description" name="description">
+
+        </textarea>
+ 
+  
+
+ <input type="submit" value="Update" id="submit">  
+
+
+</form>
+
+
+
+</div>
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+
+
+
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,203 @@
+<html>
+<title>
+Manage User
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.min.css" />
+<style type="text/css">
+.ui-select{
+
+	width: 55%;
+}
+.ui-radio{
+
+	width: 45%;
+}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+//$(":radio").width("20%");
+	//$(".input").width("20%");
+$(":text").width("70%");
+var uid=$.cookie("uid");
+
+$.getJSON("http://madapp.byethost22.com/grouplist.php?callback=?",function(result){
+
+$.each(result,function(i,item){
+
+$("#group").append("<option>"+item+"</option>");
+
+});
+
+});
+
+$.getJSON("http://madapp.byethost22.com/usertype.php?callback=?",function(result){
+
+$.each(result,function(i,item){
+
+$("#usertype").append("<option>"+item+"</option>");
+
+});
+
+});
+
+$("#submit").click(function(){
+
+$("#hidden").attr("value",$.cookie("uid"));
+
+
+	
+$.getJSON("http://madapp.byethost22.com/adduser.php?callback=?",$("#profile").serialize(),function(result){
+
+	alert("New User!");
+
+
+});
+
+window.location.reload();
+
+});
+
+
+
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+});
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+});
+
+
+});
+
+
+
+</script>
+
+<body>
+
+<div data-role="page" data-add-back-btn="true">
+
+<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+</div><!--header-->
+
+
+
+<div data-role="content"  data-theme="a">
+
+<br>
+<br>
+
+
+<br>
+
+
+<form name="profile" method="post" action="" id="profile">
+Name
+	
+	<input type="text" name="name" class="input" id="name">
+	<input type="hidden" id="hidden" name="uid">
+Group
+
+	<select id="group" name="group">
+<option>Select</option>
+
+	</select>
+	Email-id
+	
+	<br>
+	<input type="text" name="email" id="email" class="input">
+
+
+	Sex<br>
+     <!--fieldset data-role="controlgroup" data-type="horizontal" name="gender"-->
+     
+         <input type="radio"  id="r1" value="m" name="gender">
+         <label for="r1" class="input" id="l1">Male
+         </label>
+              <input type="radio"  id="r2" value="f" name="gender">
+              <label for="r2" class="input" id="l2">
+         	   Female
+              </label>
+
+     <!--/fieldset-->
+    
+	
+Contact No
+<br>
+	<input type="text" name="phno" id="phno" class="input">
+
+ 
+Address
+	<br>
+        <textarea class="input" id="address" name="address">
+Type your Address
+        </textarea>
+	
+	 Joined On  
+	 <br>
+	 <input type="text" name="joinon" id="joinon" class="input">  
+ 
+    Left On  
+	 <br>
+	 <input type="text" name="lefton" id="lefton" class="input">  
+
+  User Type
+
+	<select id="usertype" name="usertype">
+<option>Select</option>
+
+	</select>
+  
+	 
+    
+	<input type="submit" value="Submit" id="submit">  
+
+
+</form>
+
+
+
+</div>
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+
+
+
+</div>
+
+</body>
+
+
+</html>

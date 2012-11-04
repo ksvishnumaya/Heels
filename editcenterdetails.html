@@ -1,0 +1,154 @@
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<script type="text/javascript" src="js/cookies.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<style type="text/css">
+.ui-select{
+
+	width: 80%;
+}
+
+</style>
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+
+
+	var c=$.cookie("centername");
+
+	var uname=$.cookie("uname");
+
+	$("#center").attr("value",c);
+
+
+var st=window.location.search;
+
+st=st.substr(4);
+
+st=st.replace(/%20/g,' ');
+
+
+$.getJSON("http://madapp.byethost22.com/volunteers.php?callback=?",{uname:uname},function(result){
+
+$.each(result,function(i,item){
+
+if(item[0]==st)
+{
+	
+
+    $("#centerhead").append("<option selected='selected'>"+item[0]+"</option>").trigger("create");
+      
+
+}
+
+else
+{
+
+	  $("#centerhead").append("<option>"+item[0]+"</option>").trigger("create");
+    
+}
+      
+});
+
+});
+
+$("#submit").click(function(){
+
+
+var ch=$("#centerhead").val();
+
+var center=$("#center").val();
+
+var centername=$.cookie("centername");
+
+var uid=$.cookie("uid");
+
+
+$.getJSON("http://madapp.byethost22.com/editcenterdetails.php?callback=?",{ch:ch,center:center,centername:centername,uid:uid},function(){
+
+	alert("successful");
+})    
+
+
+
+});
+
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+});
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+});
+
+});
+
+
+</script>
+<body>
+
+<div data-role="page">
+
+
+    <div data-role="header" data-theme="a" data-position="fixed" data-fullscreen="true">
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="index.html" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+</div>
+
+<div data-role="content">
+ 	<br><br><br>
+
+	
+
+<form id="editcenterdetails" name="editcenterdetails">
+
+	<label> Center</label>
+	<input type="text" id="center" name="center" style="width:75%">
+
+	<label> Center Head</label>
+
+    
+	<select id="centerhead" name="centerhead">
+    
+<option id="ch" name="ch">Change Center Head</option>
+
+</select>
+
+<br>
+<input type="button" id="submit" value="Save" style="width:50%">
+
+</form>
+
+
+
+	<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+    
+
+ </div><!--footer-->
+   
+</div>
+</body>
+	</html>
+ 

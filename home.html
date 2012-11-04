@@ -1,0 +1,161 @@
+<html>
+
+<head>
+<title>
+MADapp
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1,"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css"/>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+
+<script type="text/javascript" src="js/cookies.js"></script>
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.min.css" />
+<!--script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script-->
+
+<style type="text/css">
+.imgbox{
+height: 120px;
+background-color:rgb(0,0,0);
+width:140px;
+}
+.imgtext{
+color:white;
+text-align: center;
+padding:0px;
+}
+img
+{
+  width: 60px;
+  height: 60px;
+padding: 10px 15px 10px 15px ;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+/*function getCookie(c_name)
+{
+var i,x,y,z,ARRcookies=document.cookie.split(";");
+for (i=0;i<ARRcookies.length;i++)
+{
+  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+  x=x.replace(/^\s+|\s+$/g,"");
+  
+
+  if (x==c_name)
+    {
+
+    y=y.replace(/\+/g," ");
+
+    return unescape(y);
+    }
+
+  }
+}*/
+
+$(function(){
+
+	$("#uname").text($.cookie('uname'));
+
+  $("#title").text($.cookie('title'));
+
+    var title=$.cookie("title");
+
+
+	var item =new Array();
+
+    $.getJSON("http://madapp.byethost22.com/iconslist.php?callback=?",{title:title},function(result){
+
+      $.each(result,function(i,item){
+  
+      $("#icons").append("<li><a href='"+item+".html' data-ajax='false' data-transition='flip'><img src='images/"+item+".png' class='ui-li-thumb'>"+item+"</a></li>").trigger("create");
+
+ 
+ $("#icons").listview("refresh");
+
+         
+            
+
+      });
+
+    });
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+})
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+
+
+})
+
+$("#profile").click(function(){
+
+ window.location="profile.html";
+
+ })
+
+
+});
+
+</script>
+
+
+</head>
+
+<body>
+<div data-role="page" data-add-back-btn="true">
+
+<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+
+
+</div><!--header-->
+
+
+<div data-role="content">
+<p><br></p>
+<div id="uname" align ="right" style="font:20px calibri bold;"> </div>
+<div id="title" align="right" style="font:20px  italic bold, serif;">  </div>
+
+<br>
+<ul data-role="listview" id="icons" data-inset="true">
+
+</ul>
+
+
+</div>
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="" id="profile" data-icon="info" data-ajax="false">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+</div>
+
+</body>
+
+
+</html>

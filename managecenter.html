@@ -1,0 +1,88 @@
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<script type="text/javascript" src="js/cookies.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript">
+
+
+var st=window.location.search;
+
+st=st.substr(4);
+
+	//alert(st);
+
+$(document).ready(function(){
+
+$("#editcenter").click(function(){
+
+window.location="editcenterdetails.html?ch="+st;
+
+});
+	
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+});
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+});
+});
+
+
+</script>
+<body>
+
+<div data-role="page">
+
+
+    <div data-role="header" data-theme="a" data-position="fixed" data-fullscreen="true">
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="index.html" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+</div>
+
+<div data-role="content">
+ 	<br><br><br>
+
+	
+
+	<div id="here" style="width:80%">
+
+	<a href='' data-role='button' id='editcenter'>Edit Center Details</a><br>
+	<a href='volunteers.html' data-role='button' data-ajax='false'>Manage Volunteers</a><br>
+	<a href='kids.html' data-role='button' data-ajax='false'>Manage Kids</a><br>
+	<!--a href='managelevel.html' data-role='button' data-ajax='false' id='level'>Manage Level</a><br-->
+	<!--a href='managebatches.html' data-role='button'>Manage Batches</a-->
+
+</div>
+<div><br><br><br>
+	</div>
+
+	<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+    
+
+ </div><!--footer-->
+   
+</div>
+</body>
+	</html>
+ 

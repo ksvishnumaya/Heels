@@ -1,0 +1,146 @@
+<!DOCTYPE html> 
+
+
+<html> 
+	<head> 
+		
+
+
+	<title>Login</title> 
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+<style ="text/css">
+body
+{
+	background-color: "white";
+}
+</style>
+<script type="text/javascript">
+
+
+/*
+function checkCookie()
+{
+var username=getCookie("username");
+  if (username!=null && username!="")
+  {
+  $("#email").text(username);
+
+  }
+
+}
+
+*/
+
+
+
+$(document).ready(function(){
+
+	/////document.location.reload();
+
+/* window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}*/
+
+
+
+
+$("#email").keyup(function(){
+
+
+});	
+
+$("#submit").click(function(){
+
+$.getJSON("http://madapp.byethost22.com/auth.php?callback=?",$("#form1").serialize(),function(result){
+
+
+
+if(result =="Invalid username or/and password. Try again.")
+{
+
+$("#result").html(result);
+
+window.location.reload();
+
+}
+else
+{
+
+	 $.cookie("uname",result[0]);
+ 
+     $.cookie("title",result[1]);
+
+     $.cookie("uid",result[2]);
+
+     window.location="home.html";
+	//$("#result").html(result);
+}
+
+  
+});
+
+});
+
+$("#rem").change(function(){
+
+
+
+});
+
+
+});
+
+</script>
+
+	</head> 
+
+<body>
+	<div data-role="page">
+
+	<div data-role="header" font-size="32px">
+		<p align="center"><b>MADAPP LOGIN</b></p>
+	</div>
+
+	<div data-theme="a" data-role="content" id="content">
+
+
+
+		<table  align="center">
+			
+<form action="" method="post"  id="form1">
+	
+		<tr>
+			<td width="25%"><b>Email</b></td>  <td><input type="text" name="email" id="email"></td>
+		</tr>
+		<tr>
+			<td width="25%"><b>Password</b></td>  <td><input type="password" name="pwd" ></td>
+		</tr>
+		
+		
+		<!--tr>
+			<td><a href="forgot_pwd.html">ForgotPassword?</a></td><td></td>
+		</tr-->
+		<tr >
+			<td></td>
+			<td><input type="submit" value="Login" id="submit"></td>
+		</tr>
+	
+</form>
+</table>
+<div id="result"></div>
+</div>
+
+</div>
+
+</body>
+</html>

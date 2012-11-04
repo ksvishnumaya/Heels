@@ -1,0 +1,211 @@
+<html>
+<title>
+Profile
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type="text/javascript" src="js/cookies.js"></script>
+
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.min.css" />
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+//$(":radio").width("20%");
+	//$(".input").width("20%");
+	$(":text").width("50%");
+var uid=$.cookie("uid");
+
+$.getJSON("http://madapp.byethost22.com/profiledata.php?callback=?",{uid:uid},function(result)
+{ 
+
+
+//alert(result.phone);
+
+
+$("#name").attr("value",result.name);
+
+ 
+if(result.sex=="f")
+{
+ 
+	$("#r2").attr("checked","checked");
+
+	$("#l2").removeClass("ui-btn-on ui-radio-off").addClass("ui-btn-active ui-radio-on");
+}
+if(result.sex=="m")
+{
+	
+
+	$("#r1").attr("checked","checked");
+
+    $("#l1").removeClass("ui-btn-on ui-radio-off").addClass("ui-btn-active ui-radio-on");
+
+}
+
+$("#phno").attr("value",result.phone);
+
+$("#email").attr("value",result.email);
+
+$("#address").attr("value",result.address);
+
+$("#pswd1").attr("value",result.password);
+
+$("#pswd2").attr("value",result.password);
+
+});
+
+$("#submit").click(function(){
+
+$("#hidden").attr("value",$.cookie("uid"));
+
+if($("#pswd1").val()==$("#pswd2").val())
+{
+	
+$.getJSON("http://madapp.byethost22.com/profilesubmit.php?callback=?",$("#profile").serialize(),function(){
+
+alert("updated!");
+
+
+});
+
+window.location.reload();
+
+}
+else
+{
+	alert("Unmatching Passwords.")
+}
+
+
+
+});
+
+
+
+
+$("#logout").click(function(){
+
+window.location="index.html";
+
+});
+
+$("#dashboard").click(function(){
+
+ window.location="home.html";
+ 
+});
+
+
+});
+
+
+
+</script>
+
+<body>
+
+<div data-role="page" data-add-back-btn="true">
+
+<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+
+
+</div><!--header-->
+
+
+
+<div data-role="content"  data-theme="a">
+
+<br>
+<br>
+
+
+
+<br>
+
+
+<form name="profile" method="post" action="" id="profile">
+Name
+	
+	<input type="text" name="name" class="input" id="name">
+
+	<input type="hidden" id="hidden" name="uid">
+
+	Sex<br>
+     <fieldset data-role="controlgroup" data-type="horizontal">
+     
+         <input type="radio" name="gender" id="r1" value="m" >
+         <label for="r1" class="input" id="l1">Male
+         </label>
+              <input type="radio" name="gender" id="r2" value="f">
+              <label for="r2" class="input" id="l2">
+         	   Female
+              </label>
+
+     </fieldset>
+    
+	
+Contact No
+<br>
+	<input type="text" name="phno" id="phno" class="input">
+
+  Email-id
+	
+	<br>
+	<input type="text" name="email" id="email" class="input">
+
+Address
+	<br>
+        <textarea class="input" id="address" name="address">
+Type your Address
+        </textarea>
+	
+Password
+	<br>
+	<input type="text" name="pswd1" id="pswd1" class="input">
+  
+  
+	 Confirm Password  
+	 <br>
+	 <input type="text" name="pswd2" id="pswd2" class="input">  
+  
+  
+	 
+    
+	<input type="submit" value="Submit" id="submit">  
+
+
+</form>
+
+
+
+</div>
+<div><br><br><br></div>
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true" data-id="foo">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+
+
+
+</div>
+
+</body>
+
+
+</html>
