@@ -1,0 +1,74 @@
+<html>
+<head>      
+        <title>Reports</title>           
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+<link rel="stylesheet" type="text/css" href="css/ThisIsIt.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+<script type= "text/javascript">
+
+$(document).ready(function(){
+	
+	$("#vol_low").click(function()
+	{
+		window.location="lesscredit.html";
+	});
+	$("#vol_awol").click(function()
+	{
+		window.location="absentee.html";
+	});
+	
+
+	$("#logout").click(function()
+	{
+	window.location="index.html";
+	})
+
+	$("#dashboard").click(function()
+	{
+	window.location="home.html";
+ 	})
+});
+</script>
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.1.1.css" />
+</head>
+<body>
+	<div data-role="page">
+
+		<div data-role="header" data-position="fixed" data-fullscreen="true">
+
+<a href="" data-icon="home"   data-iconpos="notext" id="dashboard"/>Home</a>
+<h1>MADApp</h1>
+<a href="" data-iconpos="notext" data-icon="logout" id="logout">Logout</a>
+</div><!--header-->
+<br><br><br>
+<div data-role="content">
+	
+		<input type="button" id="vol_low" value="Volunteers with low credit"><br>
+		<input type="button" id="vol_awol" value="Absent without substitute">
+		
+</div>
+
+
+
+
+
+<div data-role="footer" data-theme="a" data-position="fixed" data-fullscreen="true">
+
+	<div data-role="navbar"  >
+		<ul>
+			<li><a href="updates.html" data-icon="star" data-ajax="false">Updates</a></li>
+			<li><a href="profile.html" data-icon="info">Profile</a></li>
+		
+		</ul>
+	</div><!-- /navbar -->
+
+</div>
+
+</div>
+
+	</body>
+
+
+</html>
